@@ -12,6 +12,10 @@ class Student
     @age = options['age'].to_i()
   end
 
+  def full_name()
+    return "#{@first_name} #{@last_name}"
+  end
+
   #SAVE
   def save()
     sql = "INSERT INTO students (
@@ -30,6 +34,14 @@ class Student
       values = [id]
       student = SqlRunner.run(sql, values)
       result = Student.new(student.first)
+      return result
+    end
+
+    #FIND ALL
+    def self.all()
+      sql = "SELECT * FROM students"
+      students = SqlRunner.run(sql)
+      result = students.map{|student| Student.new(student)}
       return result
     end
 
